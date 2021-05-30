@@ -4,6 +4,9 @@ pipeline {
 	tools {
     	maven 'local-mvn'
 	}
+    triggers {
+        pollSCM '* * * * *'
+    }
 	stages {
     	stage("Checkout") {   
         	steps {               	 
