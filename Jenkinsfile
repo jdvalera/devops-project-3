@@ -7,7 +7,7 @@ pipeline {
 	stages {
     	stage("Checkout") {   
         	steps {               	 
-            	git branch: 'mains',  url: 'https://github.com/jdvalera/devops-project-3'          	 
+            	git branch: 'main',  url: 'https://github.com/jdvalera/devops-project-3'          	 
         	}    
     	}
     	stage('Build') {
