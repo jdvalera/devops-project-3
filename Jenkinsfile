@@ -29,12 +29,13 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: '**/*.war*', onlyIfSuccessful: true
+        }
+        success {
             deploy adapters: [tomcat9(url: 'http://35.236.48.65:8080/', 
                                 credentialsId: 'tomcat')], 
                             war: 'target/*.war',
-                            contextPath: 'app',
-                            onlyIfSuccessful: true
-                }
+                            contextPath: 'app'
+        }
         failure {
             mail to: 'devops.valera@gmail.com',
              subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
