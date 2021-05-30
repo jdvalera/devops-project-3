@@ -29,6 +29,8 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: '**/*.war*', onlyIfSuccessful: true
+        }
+        failure {
             mail to: 'devops.valera@gmail.com',
              subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
              body: "Something is wrong with ${env.BUILD_URL}"
