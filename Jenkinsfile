@@ -29,7 +29,7 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: '**/*.war*', onlyIfSuccessful: true
-            junit 'build/reports/**/*.xml'
+            step([$class: 'JUnitResultArchiver', testResults: '**/target/failsafe-reports/TEST-*.xml'])
         }
         success {
             deploy adapters: [tomcat9(url: 'http://35.236.48.65:8080/', 
