@@ -17,7 +17,7 @@ pipeline {
     	}
     	stage("Unit test") {          	 
         	steps {  	 
-            	sh "mvn test"          	 
+            	sh "mvn clean test site"          	 
        	    }
         }
     	stage("Package") {          	 
@@ -29,13 +29,20 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: '**/*.war*', onlyIfSuccessful: true
-            junit '**/target/failsafe-reports/TEST-*.xml'
         }
         success {
             deploy adapters: [tomcat9(url: 'http://35.236.48.65:8080/', 
                                 credentialsId: 'tomcat')], 
                             war: 'target/*.war',
                             contextPath: 'app'
+            publishHTML target: [
+              allowMissing: false,
+              alwaysLinkToLastBuild: false,
+              keepAll: true,
+              reportDir: 'target/site',
+              reportFiles: 'surefire-report.html',
+              reportName: 'Test Coverage'
+            ]
         }
         failure {
             mail to: 'devops.valera@gmail.com',
