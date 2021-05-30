@@ -5,7 +5,7 @@ pipeline {
     	maven 'local-mvn'
 	}
     triggers {
-        pollSCM '* * * * *'
+        pollSCM '0 0 * * *'
     }
 	stages {
     	stage("Checkout") {   
