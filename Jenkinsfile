@@ -7,7 +7,7 @@ pipeline {
 	stages {
     	stage("Checkout") {   
         	steps {               	 
-            	git branch: 'main',  url: 'https://github.com/jdvalera/devops-project-3'          	 
+            	git branch: 'mains',  url: 'https://github.com/jdvalera/devops-project-3'          	 
         	}    
     	}
     	stage('Build') {
@@ -29,6 +29,9 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: '**/*.war*', onlyIfSuccessful: true
+            mail to: 'devops.valera@gmail.com',
+             subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+             body: "Something is wrong with ${env.BUILD_URL}"
         }
     }
 }
